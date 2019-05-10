@@ -1,0 +1,78 @@
+1 What data types do each of these values represent?
+
+"A Clockwork Orange" --string
+42  -- number
+09/02/1945  --date
+98.7  --float
+$15.99 --float/currency
+
+2 Explain when a database would be used. Explain when a text file would be used.
+Databases are used when we need to store the information and have it exist even when the program
+is not running, or when multiple instances are running. If we will have changes to the data coming
+from multiple users, the database will be able to manage these changes and also be searchable. A text file
+would suffice for storing information that will not be changed/added to and only needs to be used
+locally
+
+3 Describe one difference between SQL and other programming languages.
+SQL is a declarative language, so we don't get to choose a search algorithm or define HOW it will 
+do what we want, we just tell it what we want it to find and it determines how it will do that (vs
+a procedural language where we have to define how each step will work very specifically)
+
+4 In your own words, explain how the pieces of a database system fit together at a high level.
+Databases store information in a binary file format. We interact with the database through an interface
+like the command line or an application on a server. Databases are organized into tables, which are made up
+of rows and columns, each containing cells. This organization allows us to effectively query the database
+using SQL - we write commands telling the database what we want to find, and it returns the info we need
+by searching through the table(s). 
+
+5 Explain the meaning of table, row, column, and value.
+Relational databases store their information in the form of tables, their organizational structure.
+Tables consist of vertical rows and horizontal columns, as in a spreadsheet. At the intersection of 
+each row and column is a cell, an individual unit/location in which the database can store a value,
+a piece of information. 
+
+6 List three data types that can be used in a table.
+Integers, strings, Objects
+
+7 Given this payments table, provide an English description of the following queries and include their results:
+
+     SELECT date, amount
+     FROM payments;
+
+// Will yield a new table consisting of 2 columns, date and amount, which will each have 
+4 rows, full of the 4 dates and amounts from the original table
+
+     SELECT amount
+     FROM payments
+     WHERE amount > 500;
+
+// Will yield a new table with a single column for amounts, and will include 3 rows with the 3 amounts
+(other than the first one which is 1500)
+
+     SELECT *
+     FROM payments
+     WHERE payee = 'Mega Foods';
+//Will yield a table with all the columns (date, payee, amount, memo) from the row with the 
+entry for Mega Foods
+
+8 Given this users table, write SQL queries using the following criteria and include the output:
+
+The email and sign-up date for the user named DeAndre Data.
+	SELECT email, signup
+	FROM users
+	WHERE name = 'Deandre Data'
+
+ // 2 columns, 'datad@comcast.net' and '2008-01-20'
+
+The user ID for the user with email 'aleesia.algorithm@uw.edu'.
+
+	SELECT userid
+	FROM users
+	WHERE email = 'aleesia.algorithm@uw.edu'
+// Yields 1 column with 1
+
+All the columns for the user ID equal to 4.
+	SELECT *
+	FROM users
+	WHERE userid = 4
+//4 columns: 4, 'Brandy Boolean', 'bboolean@nasa.gov', '1999-10-15'
