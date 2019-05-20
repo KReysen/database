@@ -75,14 +75,14 @@ CREATE TABLE librarybooks (
   genre text,
   pubdate date,
   totalcopies integer,
-  availcopies integer,
+  availcopies integer
 );
 
 --Find three books and add their information to the table.
 
-INSERT INTO librarybooks VALUES (0804139024, 'The Martian', 'Andy Weir', 'Sci-fi', February 11, 2014, 6, 6);
-INSERT INTO librarybooks VALUES (030788743X, 'Ready Player One', 'Ernest Cline', 'Sci-fi', August 16, 2011, 3, 2);
-INSERT INTO librarybooks VALUES (1328869334, '1984', 'George Orwell', 'Sci-fi', April 4, 2017, 5, 1);
+INSERT INTO librarybooks VALUES (0804139024, 'The Martian', 'Andy Weir', 'Sci-fi', 'February 11, 2014', 6, 6);
+INSERT INTO librarybooks VALUES (0307887439, 'Ready Player One', 'Ernest Cline', 'Sci-fi', 'August 16, 2011', 3, 2);
+INSERT INTO librarybooks VALUES (1328869334, '1984', 'George Orwell', 'Sci-fi', 'April 4, 2017', 5, 1);
 
 --Someone has just checked out one of the books. Change the number of available copies to 1 fewer.
 
@@ -105,7 +105,7 @@ CREATE TABLE spacecraft (
   mission text,
   orbitingbody text,
   operating boolean,
-  milesfromearth numeric,
+  milesfromearth numeric
 );
 
 --Add three non-Earth-orbiting satellites to the table.
@@ -129,17 +129,17 @@ CREATE TABLE inbox (
   body text,
   timestamp timestamp,
   read boolean,
-  chainid integer,
+  chainid integer
 );
 
 
 --Add three new emails to the inbox.
-INSERT INTO inbox VALUES (001, 'Donuts', 'Steve Smith', 'none', 'Free donuts in the staff lounge!', 2017-08-19 12:17:55, false, 4498740 );
-INSERT INTO inbox VALUES (102, 'Meet later?', 'Jessica Jones', 'Austin Aries', 'Want to grab lunch later?', 2017-08-21 10:15:30, true, 394850);
-INSERT INTO inbox VALUES (765, 'Get snacks', 'Kate Kane', 'none', 'Make sure to bring the snacks for the meeting today!', 2017-09-01 11:22:00, true, 937597);
+INSERT INTO inbox VALUES (001, 'Donuts', 'Steve Smith', 'none', 'Free donuts in the staff lounge!', '2017-08-19 12:17:55', false, 4498740);
+INSERT INTO inbox VALUES (102, 'Meet later?', 'Jessica Jones', 'Austin Aries', 'Want to grab lunch later?', '2017-08-21 10:15:30', true, 394850);
+INSERT INTO inbox VALUES (765, 'Get snacks', 'Kate Kane', 'none', 'Make sure to bring the snacks for the meeting today!', '2017-09-01 11:22:00', true, 937597);
 
 --You deleted one of the emails, so write a command to remove the row from the inbox table.
-DELETE FROM inbox WHERE id =001;
+DELETE FROM inbox WHERE id=001;
 
 --You started reading an email but just heard a crash in another room. 
 Mark the email as unread before investigating the crash, so you can come back and read it later.
