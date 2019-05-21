@@ -1,0 +1,168 @@
+1. How do you find related data held in two separate data tables?
+Using an INNER JOIN 
+
+2. Explain, in your own words, the difference between an INNER JOIN, LEFT OUTER JOIN, and RIGHT OUTER JOIN. Give a real-world example for each.
+With an INNER JOIN, only complete rows will be returned in the final table. If we had 8 forklifts and 6 drivers, when we joined the forklift table and driver table,
+it would only display the forklifts assigned to a driver, whereas the LEFT OUTER JOIN adds a row when needed for data that isn't shared between the tables,
+so it would show all 8 forklifts, with the 2 unused ones having a driver of NULL. The new table has a row for each row in the larger forklifts table1.
+RIGHT OUTER JOIN is the opposite of left - it includes all the overlap from the first and second table, plus any data in the second table with no overlap,
+filled in with NULL from the first table. 
+
+3. Define primary key and foreign key. Give a real-world example for each.
+Primary Key is a unique ID for each row in a table, like how each person has a social security number and
+none are shared or repeated. Foreign Key is a primary key on one table that is also included as an attribute
+on another table, and because both tables share this attribute it can be used to map one table onto the other. 
+So if we had a list of social security numbers and names, and a separate list of names with known criminal aliases, we could use
+real names as a foreign key for the SSN table to create a table of SS numbers, real names, and known aliases.
+
+4. Define aliasing.
+Aliasing is using abbreviated names for tables, which you can define with AS statements
+
+5. Change this query so that you are using aliasing:
+
+SELECT p.name, c.salary, c.vacation_days 
+FROM professor AS p
+JOIN compensation AS c
+ON p.id = c.professor_id;
+
+
+6.Why would you use a NATURAL JOIN? Give a real-world example.
+If I had a table of baseball teams, game locations, and times, and a second table of 
+players and their team, a NATURAL JOIN would yield a list of players with their team,
+game location and time. We can join a table with an identically named column without doubling that column in the results
+
+7. Using this Employee schema and data, write queries to find the following information:
+
+--List all employees and all shifts.
+
+SELECT employees.name, shifts.date, shifts.start_time, shifts.end_time
+FROM employees
+LEFT OUTER JOIN scheduled_shifts
+ON employees.id = scheduled_shifts.employee_id
+RIGHT OUTER JOIN shifts
+ON scheduled_shifts.shift_id = shifts.id;
+
+
+8. Using this Adoption schema and data, please write queries to retrieve the following information and include the results:
+
+--Create a list of all volunteers. If the volunteer is fostering a dog, include each dog as well.
+SELECT volunteers.first_name, volunteers.last_name, dogs.name AS "dog name"
+FROM volunteers
+LEFT OUTER JOIN dogs
+ON volunteers.foster_dog_id = dogs.id;
+
+first_name	last_name	dog name
+Rubeus	Hagrid	Munchkin
+Marjorie	Dursley	Marmaduke
+Sirius	Black	null
+Remus	Lupin	null
+Albus	Dumbledore	null
+
+--The cat's name, adopter's name, and adopted date for each cat adopted within 
+the past month to be displayed as part of the "Happy Tail" social media promotion 
+which posts recent successful adoptions.
+
+
+first_name	last_name	name	date
+Hermione	Granger	Azul	2019-04-06T00:00:00.000Z
+Arabella	Figg	Mushi	2019-05-01T00:00:00.000Z
+Argus	Filch	Victoire	2019-05-06T00:00:00.000Ze4444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444[p-,frxssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssdddddddddddddddddddx
+
+SELECT adopters.first_name, adopters.last_name, cats.name, cat_adoptions.date
+FROM adopters
+INNER JOIN cat_adoptions
+ON adopters.id = cat_adoptions.adopter_id
+INNER JOIN cats
+ON cat_adoptions.cat_id = cats.id;
+
+
+--Create a list of adopters who have not yet chosen a dog to adopt.
+SELECT adopters.first_name, adopters.last_name
+FROM adopters
+LEFT OUTER JOIN dog_adoptions
+ON adopters.id = dog_adoptions.adopter_id
+WHERE adopters.id NOT IN (SELECT adopter_id FROM dog_adoptions);
+
+first_name	last_name
+Arabella	Figg
+Hermione	Granger
+
+--Lists of all cats and all dogs who have not been adopted.
+SELECT cats.name
+FROM cats
+WHERE cats.id NOT IN(
+SELECT cats.id
+  FROM cats
+RIGHT OUTER JOIN cat_adoptions
+ON cat_adoptions.cat_id = cats.id);
+
+name
+Seashell
+Nala
+
+SELECT dogs.name
+FROM dogs
+WHERE dogs.id NOT IN(
+  SELECT dogs.id
+  FROM dogs
+  RIGHT OUTER JOIN dog_adoptions
+  ON dog_adoptions.dog_id = dogs.id);
+
+name
+Boujee
+Munchkin
+Marley
+Lassie
+Marmaduke
+
+--The name of the person who adopted Rosco.
+SELECT adopters.first_name
+FROM dogs
+RIGHT OUTER JOIN dog_adoptions
+ON dogs.id = dog_adoptions.dog_id
+INNER JOIN adopters
+ON adopters.id = dog_adoptions.adopter_id;
+
+first_name
+Argus
+
+9. Using this Library schema and data, write queries applying the following 
+scenarios and include the results:
+
+--To determine if the library should buy more copies of a given book, 
+please provide the names and position, in order, of all of the patrons with 
+a hold (request for a book with all copies checked out) on "Advanced Potion-Making".
+
+SELECT patrons.name, holds.rank
+FROM books
+INNER JOIN holds
+ON books.isbn = holds.isbn
+INNER JOIN patrons
+ON holds.patron_id = patrons.id
+WHERE books.title = 'Advanced Potion-Making'
+ORDER BY holds.rank ASC;
+
+name	rank
+Terry Boot	1
+Cedric Diggory	2
+
+--List all of the library patrons. If they have one or more books checked out, 
+list the books with the patrons.
+
+SELECT patrons.name, books.title
+FROM transactions
+RIGHT OUTER JOIN patrons
+ON patrons.id = transactions.patron_id
+LEFT OUTER JOIN books
+ON books.isbn = transactions.isbn
+AND transactions.checked_in_date IS NULL;
+
+
+name	title
+Hermione Granger	null
+Cho Chang	null
+Terry Boot	null
+Padma Patil	null
+Terry Boot	Advanced Potion-Making
+Hermione Granger	null
+Cedric Diggory	Fantastic Beasts and Where to Find Them
