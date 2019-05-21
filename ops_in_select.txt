@@ -54,7 +54,7 @@ SELECT * FROM cats;
 SELECT name, gender FROM cats WHERE age=7;
 
 --Find all of the names of the cats, so you don’t choose duplicate names for new cats.
-SELECT name FROM cats;
+SELECT DISTINCT name FROM cats;
 
 6. List each comparison operator and explain when you would use it. Include a real world example for each.
 If you can’t list these from memory, do these flashcards until you can!
@@ -64,7 +64,15 @@ Less than <  Results smaller than a certain value, like you must throw back caug
 Less than or equal to <= Smaller than or including a certain value, like a kids menu for patrons 10 and under
 Equal to =  Select something exactly equal to what you specify, like all students with last name 'Jones'
 Is not equal to != or <>  Select everything that ISN'T equal to what you specify, like all fantasy football players that are NOT suspended
-
+LIKE returns row if it includes the expression
+BETWEEN returns if value in the cell is within a range, like finding places with a suitable growing climate for plants between 50 and 80 degrees
+IS DISTINCT FROM used in place of not equal to when one of the results could be null - like looking up who has a signed permission slip for a field trip,
+you could use this to find both the students who have a slip but it says no permission, and also those who haven't turned it in at all (null)
+IS TRUE/FALSE to check the results in a boolean column, if there may be some entries that are null, like looking for adoptable pets that are neutered
+IS NULL returns if a cell's contents are null - useful to see all the rows that aren't missing any information
+AND returns row if it's true for all cases specified, like sorting mountain bikes to find those with 29" wheels and 140mm travel
+OR returns row if it's true for any of the cases specified, like trying to fill your fantasy team FLEX spot by sorting for players who are TE, RB, or WR
+NOT returns row if it's not true for case specified, like sorting a dealer's available cars to find only those that are not red
 
 7. From the cats table, what data is returned from these queries?
 
